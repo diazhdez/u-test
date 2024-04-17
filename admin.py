@@ -79,7 +79,49 @@ def register_user():
                         'telefono': telefono,
                         'carrera': carrera
                     })
-                    return redirect(url_for('registro'))
+                    return redirect(url_for('admin.registro'))
+
+                flash('El correo ya está en uso')
+                return redirect(url_for('admin.registro'))
+        else:
+            return redirect(url_for('session.login'))
+
+    return redirect(url_for('admin.registro'))
+
+
+# Ruta para registrar administradores
+@admin_routes.route('/register_admin/', methods=['POST', 'GET'])
+def register_admin():
+    if 'email' in session:
+        email = session['email']
+        # Función para obtener datos del usuario desde MongoDB
+        admin = get_admin(email)
+        if admin:
+            if request.method == 'POST':
+                admin = db['admin']
+                existing_admin = admin.find_one(
+                    {'email': request.form['email']})
+                nombre = request.form['nombre']
+                email = request.form['email']
+                password = request.form['password']
+                area = request.form['area']
+                genero = request.form['genero']
+                fecha = request.form['fecha']
+                telefono = request.form['telefono']
+
+                if existing_admin is None:
+                    hashpass = bcrypt.hashpw(
+                        password.encode('utf-8'), bcrypt.gensalt())
+                    admin.insert_one({
+                        'nombre': nombre,
+                        'email': email,
+                        'password': hashpass,
+                        'area': area,
+                        'genero': genero,
+                        'fecha': fecha,
+                        'telefono': telefono
+                    })
+                    return redirect(url_for('admin.registro'))
 
                 flash('El correo ya está en uso')
                 return redirect(url_for('admin.registro'))
@@ -95,19 +137,8 @@ def users():
     if 'email' in session:
         email = session['email']
         admin = get_admin(email)
-        users = db['users']
-        for user in users.find({'email': email}):
-            user.append({
-                '_id': users.get('_id'),
-                'nombre': users.get('nombre'),
-                'correo': users.get('correo'),
-                'genero': users.get('genero'),
-                'fecha': users.get('fecha'),
-                'telefono': users.get('telefono'),
-                'carrera': users.get('carrera'),
-            })
-
         if admin:
+            users = db['users'].find()
             return render_template('users.html', users=users)
         else:
             return redirect(url_for('session.login'))

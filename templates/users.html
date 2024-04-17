@@ -8,13 +8,14 @@
     <!--  -->
     <title>Administrador | Aspirantes</title>
     <!--  -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="{{ url_for('admmin.admin') }}">Admin</a>
+        <a class="navbar-brand" href="{{ url_for('admin.admin') }}">Admin</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,7 +27,8 @@
                     <a class="nav-link" href="{{ url_for('admin.registro') }}" style="color: white;">Registro</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('admin.users') }}" style="color: white;">Listado de Aspirantes</a>
+                    <a class="nav-link" href="{{ url_for('admin.users') }}" style="color: white;">Listado de
+                        Aspirantes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('session.logout') }}" style="color: white;">Cerrar Sesión</a>
@@ -52,60 +54,32 @@
                             <div class="row">
                                 <div class="col">
                                     <input type="hidden" class="form-control" value="{{ user._id }}" name="id" readonly>
+                                    <small>Ficha</small>
+                                    <input type="text" class="form-control" value="{{ user.email }}" readonly>
                                 </div>
+                                <div class="col">
+                                    <small>Contraseña</small>
+                                    <input type="text" class="form-control" value="{{ user.password }}" readonly>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
                                 <div class="col">
                                     <small>Genero</small>
-                                    <input type="text" class="form-control" value="{{ empleado.genero }}" readonly>
+                                    <input type="text" class="form-control" value="{{ user.genero }}" readonly>
                                 </div>
-                            </div>
-                            <div class="row mt-3">
                                 <div class="col">
                                     <small>Nacimiento</small>
-                                    <input type="text" class="form-control" value="{{ empleado.fecha }}" readonly>
+                                    <input type="text" class="form-control" value="{{ user.fecha }}" readonly>
                                 </div>
+                            </div>
+                            <div class="row mt-3">
                                 <div class="col">
                                     <small>Teléfono</small>
-                                    <input type="text" class="form-control" value="{{ empleado.telefono }}" readonly>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <small>Estado</small>
-                                    <input type="text" class="form-control" value="{{ empleado.estado }}" readonly>
+                                    <input type="text" class="form-control" value="{{ user.telefono }}" readonly>
                                 </div>
                                 <div class="col">
-                                    <small>Municipio</small>
-                                    <input type="text" class="form-control" value="{{ empleado.municipio }}" readonly>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <small>Ciudad</small>
-                                    <input type="text" class="form-control" value="{{ empleado.ciudad }}" readonly>
-                                </div>
-                                <div class="col">
-                                    <small>Colonia</small>
-                                    <input type="text" class="form-control" value="{{ empleado.colonia }}" readonly>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <small>Calle</small>
-                                    <input type="text" class="form-control" value="{{ empleado.calle }}" readonly>
-                                </div>
-                                <div class="col">
-                                    <small>CP</small>
-                                    <input type="text" class="form-control" value="{{ empleado.cp }}" readonly>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <small>Estatus</small>
-                                    <input type="hidden" name="empleado_id" value="{{ empleado._id }}">
-                                    <select class="form-control" name="nuevo_estado_aceptado" required>
-                                        <option value="False">Denegado</option>
-                                        <option value="True">Aceptado</option>
-                                    </select>
+                                    <small>Carrera a postularse</small>
+                                    <input type="text" class="form-control" value="{{ user.carrera }}" readonly>
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -116,8 +90,8 @@
 
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Actualizar</button>
-                            <a href="{{ url_for('delete_user', user_id=user._id) }}"
+                            <button class="btn btn-primary">Resultados</button>
+                            <a href="{{ url_for('admin.delete_user', user_id=user._id) }}"
                                 class="btn btn-danger btn-delete">Eliminar</a>
                         </form>
                     </div>

@@ -8,6 +8,7 @@
     <!--  -->
     <title>Aspirante | Inicio</title>
     <!--  -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/usuario.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -34,6 +35,14 @@
 
     <div class="container mt-3">
         <h1 class="text-center mb-5 text-white">¡Bienvenid@ {{ user.nombre }}!</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="buttons-container">
+                <a href="{{ url_for('user.test') }}"><button class="ripple-btn "><span></span>Iniciar Test</button></a>
+            </div>
+        </div>
     </div>
 
 </body>

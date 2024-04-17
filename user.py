@@ -20,3 +20,8 @@ def user():
             return render_template('user.html', user=user)
     else:
         return redirect(url_for('session.login'))
+    
+
+@user_routes.route('/test/')
+def test():
+    return render_template('test.html')
